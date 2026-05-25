@@ -20,13 +20,6 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name="cliente_endereco",
-            joinColumns = @JoinColumn(name="id_cliente"),
-            inverseJoinColumns = @JoinColumn(name="id_endereco")
-    )
-    private List<Endereco> enderecos;
 
     @Column(nullable = false)
     private String nome;
@@ -40,8 +33,16 @@ public class Cliente {
     @Column(nullable = false, unique = true)
     private String cpf;
 
-    public Cliente(ClienteRequest cliente) {
-        this.enderecos = new ArrayList<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name="cliente_endereco",
+            joinColumns = @JoinColumn(name="id_cliente"),
+            inverseJoinColumns = @JoinColumn(name="id_endereco")
+    )
+    private List<Endereco> enderecos;
+
+    public Cliente(ClienteRequest cliente, List<Endereco> enderecos) {
+        this.enderecos = enderecos;
         this.nome = cliente.getNome();
         this.telefone = cliente.getTelefone();
         this.email = cliente.getEmail();

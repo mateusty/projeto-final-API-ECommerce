@@ -15,7 +15,9 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class EnderecoService {
@@ -28,7 +30,7 @@ public class EnderecoService {
         this.restClient = RestClient.builder().baseUrl("https://viacep.com.br").build();
     }
 
-    public Endereco inserirEndereco(EnderecoRequest enderecoRequest) {
+    public Endereco buscarViaCep(EnderecoRequest enderecoRequest) {
         try {
             ResponseEntity<ViaCepResponse> viaCepResponse = this.restClient
                     .get()
@@ -40,12 +42,25 @@ public class EnderecoService {
                 throw new NotFoundException("Não foi encontrado o cep informado");
             }
             Endereco endereco = new Endereco(enderecoRequest, viaCepResponse.getBody());
-            return this.enderecoRepository.save(endereco);
+            return endereco;
         } catch(HttpClientErrorException ex) {
             if(ex.getStatusCode() == HttpStatus.BAD_REQUEST) {
                 throw new InvalidDataException("O cep informado é inválido");
             }
             throw ex;
         }
+    }
+
+    // Funções auxiliares para o Service do cliente
+    public EnderecoResponse buscarEndereco(String cep) {
+        return new EnderecoResponse(this.enderecoRepository.findByCep(cep));
+    }
+
+    public boolean doesCepExists(String cep) {
+        return this.enderecoRepository.findByCep(cep) != null;
+    }
+
+    public List<Endereco> listarEnderecosPorID(UUID id) {
+        return this.enderecoRepository.findByClienteId(id);
     }
 }

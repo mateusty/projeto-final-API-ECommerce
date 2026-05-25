@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, UUID> {
+    public Cliente findByCpf(String cpf);
+    public Cliente findByEmailLikeIgnoreCase(String email);
 }

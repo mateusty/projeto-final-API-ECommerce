@@ -9,16 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EnderecoRequest {
+public class EnderecoUpdateRequest {
 
     @NotBlank(message = "O CEP é obrigatório")
     @Pattern(regexp = "\\d{8}", message = "O CEP deve conter 8 dígitos numéricos (sem traço)")
     private String cep;
 
     private String complemento;
-
-    public EnderecoRequest(EnderecoUpdateRequest endereco) {
-        this.cep = endereco.getCep();
-        this.complemento = endereco.getComplemento();
-    }
 }

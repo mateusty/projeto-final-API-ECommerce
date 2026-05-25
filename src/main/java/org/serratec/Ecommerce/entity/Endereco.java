@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.serratec.Ecommerce.model.EnderecoRequest;
+import org.serratec.Ecommerce.model.EnderecoResponse;
 import org.serratec.Ecommerce.model.ViaCepResponse;
 
 import java.util.UUID;
@@ -44,5 +45,14 @@ public class Endereco {
         this.bairro = viaCepResponse.bairro();
         this.localidade = viaCepResponse.localidade();
         this.uf = viaCepResponse.uf();
+    }
+
+    public Endereco(EnderecoResponse endereco) {
+        this.cep = endereco.getCep();
+        this.logradouro = endereco.getLogradouro();
+        this.complemento = endereco.getComplemento();
+        this.bairro = endereco.getBairro();
+        this.localidade = endereco.getLocalidade();
+        this.uf = endereco.getUf();
     }
 }
