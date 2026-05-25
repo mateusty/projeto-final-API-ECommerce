@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.serratec.Ecommerce.model.ClienteRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +20,7 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name="cliente_endereco",
             joinColumns = @JoinColumn(name="id_cliente"),
@@ -37,4 +39,12 @@ public class Cliente {
 
     @Column(nullable = false, unique = true)
     private String cpf;
+
+    public Cliente(ClienteRequest cliente) {
+        this.enderecos = new ArrayList<>();
+        this.nome = cliente.getNome();
+        this.telefone = cliente.getTelefone();
+        this.email = cliente.getEmail();
+        this.cpf = cliente.getCpf();
+    }
 }

@@ -2,6 +2,7 @@ package org.serratec.Ecommerce.service;
 
 import org.serratec.Ecommerce.entity.Endereco;
 import org.serratec.Ecommerce.exception.InvalidDataException;
+import org.serratec.Ecommerce.exception.NotFoundException;
 import org.serratec.Ecommerce.model.EnderecoRequest;
 import org.serratec.Ecommerce.model.EnderecoResponse;
 import org.serratec.Ecommerce.model.ViaCepResponse;
@@ -35,7 +36,9 @@ public class EnderecoService {
                     .accept(MediaType.APPLICATION_JSON)
                     .retrieve()
                     .toEntity(ViaCepResponse.class);
-
+            if(viaCepResponse.getBody() == null) {
+                throw new NotFoundException("Não foi encontrado o cep informado");
+            }
             Endereco endereco = new Endereco(enderecoRequest, viaCepResponse.getBody());
             return this.enderecoRepository.save(endereco);
         } catch(HttpClientErrorException ex) {

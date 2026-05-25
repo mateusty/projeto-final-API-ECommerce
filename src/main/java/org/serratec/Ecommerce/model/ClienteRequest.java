@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.List;
 
@@ -19,17 +20,17 @@ public class ClienteRequest {
     private String nome;
 
     @NotBlank(message = "O CPF é obrigatório")
-    @Pattern(regexp = "\\d{11}", message = "O CPF deve conter 11 dígitos numéricos")
+    @CPF(message = "O CPF informado é inválido ")
     private String cpf;
 
     @NotBlank(message = "O E-mail é obrigatório")
-    @Email(message = "O E-mail inválido")
+    @Email(message = "O E-mail informado é inválido")
     private String email;
 
     @NotBlank(message = "O Telefone é obrigatório")
     @Pattern(regexp = "\\d{10,11}", message = "O Telefone deve conter 10 ou 11 dígitos")
     private String telefone;
 
-    @NotEmpty
+    @NotEmpty(message = "O cliente necessita de ao menos 1 endereço")
     private List<EnderecoRequest> enderecos;
 }
