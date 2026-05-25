@@ -18,6 +18,13 @@ public class ClienteService {
     private final ClienteRepository clienteRepository;
     private final EnderecoService enderecoService;
 
+    public ClienteResponse buscarPorId(UUID id) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("O Cliente com o ID: " + id + " não foi encontrado."));
+        cliente.setEnderecos(this.enderecoService.listarEnderecosPorID(cliente.getId()));
+        return new ClienteResponse(cliente);
+    }
+
     public ClienteService(ClienteRepository clienteRepository, EnderecoService enderecoService) {
         this.clienteRepository = clienteRepository;
         this.enderecoService = enderecoService;

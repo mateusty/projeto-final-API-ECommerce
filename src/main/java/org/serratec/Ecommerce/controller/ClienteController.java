@@ -22,6 +22,18 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ClienteResponse> buscarPorId(@PathVariable UUID id) {
+        return ResponseEntity.ok(clienteService.buscarPorId(id));
+    }
+
+    @GetMapping()
+    public ResponseEntity<ClienteResponse> buscarCliente(
+            @RequestParam(required = false) String cpf,
+            @RequestParam(required = false) String email) {
+        return ResponseEntity.ok(clienteService.buscarCliente(cpf, email));
+    }
+
     @PostMapping()
     public ResponseEntity<Cliente> inserirCliente(@Valid @RequestBody ClienteRequest cliente) {
         return ResponseEntity.status(HttpStatus.CREATED).body((this.clienteService.inserirCliente(cliente)));
