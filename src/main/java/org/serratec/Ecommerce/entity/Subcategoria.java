@@ -1,5 +1,6 @@
 package org.serratec.Ecommerce.entity;
 
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -13,28 +14,24 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "categoria")
-public class Categoria {
+@Table(name = "subcategoria")
+
+public class Subcategoria {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @NotBlank (message = " A categoria precisa de um nome ")
+    @NotBlank(message = " A categoria precisa de um nome ")
     private String nome;
 
     @Size(max = 200 , message = " A descrição deve ter no maximo 200 caracteres")
     private String descricao;
 
-    @Enumerated(EnumType.STRING)
-    private StatusCategoria statusCategoria;
-
-
-
-
-
-
-
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
 
 
 }
