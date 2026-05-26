@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -20,6 +21,18 @@ public class ClienteController {
 
     public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ClienteResponse> buscarPorId(@PathVariable UUID id) {
+        return ResponseEntity.ok(clienteService.buscarPorId(id));
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<ClienteResponse>> buscarCliente(
+            @RequestParam(required = false) String cpf,
+            @RequestParam(required = false) String email) {
+        return ResponseEntity.ok(clienteService.buscarCliente(cpf, email));
     }
 
     @PostMapping()

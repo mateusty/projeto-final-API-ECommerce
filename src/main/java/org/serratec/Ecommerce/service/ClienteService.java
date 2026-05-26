@@ -18,6 +18,13 @@ public class ClienteService {
     private final ClienteRepository clienteRepository;
     private final EnderecoService enderecoService;
 
+    public ClienteResponse buscarPorId(UUID id) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("O Cliente com o ID: " + id + " não foi encontrado."));
+        cliente.setEnderecos(this.enderecoService.listarEnderecosPorID(cliente.getId()));
+        return new ClienteResponse(cliente);
+    }
+
     public ClienteService(ClienteRepository clienteRepository, EnderecoService enderecoService) {
         this.clienteRepository = clienteRepository;
         this.enderecoService = enderecoService;
@@ -68,23 +75,29 @@ public class ClienteService {
         return clienteDB;
     }
 
-    public ClienteResponse buscarCliente(String cpf, String email) {
+    public List<ClienteResponse> buscarCliente(String cpf, String email) {
         boolean temCpf = cpf != null && !cpf.isBlank();
         boolean temEmail = email != null && !email.isBlank();
-        Cliente cliente = null;
+        List<Cliente> clientes = new ArrayList<>();
 
         if(temCpf) {
-            cliente = this.clienteRepository.findByCpf(cpf);
+            clientes.add(this.clienteRepository.findByCpf(cpf));
         }
-        if(temEmail && cliente == null) {
-            cliente = this.clienteRepository.findByEmailLikeIgnoreCase(email);
+        if(temEmail && clientes.isEmpty()) {
+            clientes.add(this.clienteRepository.findByEmailLikeIgnoreCase(email));
         }
 
-        if(cliente == null) {
+        if(!(temCpf || temEmail)) {
+            clientes.addAll(this.clienteRepository.findAll());
+        }
+
+        if(clientes.isEmpty()) {
             throw new NotFoundException("Não existe um cliente com o cpf: " + cpf + ", Ou com o email: " + email);
         }
-        cliente.setEnderecos(this.enderecoService.listarEnderecosPorID(cliente.getId()));
+        clientes.forEach(cliente -> {
+            cliente.setEnderecos(this.enderecoService.listarEnderecosPorID(cliente.getId()));
+        });
 
-        return new ClienteResponse(cliente);
+        return clientes.stream().map(ClienteResponse::new).toList();
     }
 }
