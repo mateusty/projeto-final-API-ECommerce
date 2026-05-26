@@ -22,11 +22,13 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
-    private String idCategoria;
+    @ManyToOne
+    @JoinColumn(name = "id_categoria", nullable = false)
+    private Categoria categoria;
 
-    @Column(nullable = false)
-    private String idSubCategoria;
+    @ManyToOne
+    @JoinColumn(name = "id_subcategoria", nullable = false)
+    private Subcategoria subcategoria;
 
     @Column(nullable = false)
     private String nomeProduto;
@@ -35,8 +37,8 @@ public class Produto {
     private Double preco;
 
     public Produto(ProdutoRequest dto) {
-        this.idCategoria = dto.getIdCategoria();
-        this.idSubCategoria = dto.getIdSubCategoria();
+        this.categoria = dto.getCategoria();
+        this.subcategoria = dto.getSubcategoria();
         this.nomeProduto = dto.getNomeProduto();
         this.preco = dto.getPreco();
     }

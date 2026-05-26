@@ -16,15 +16,15 @@ public class ProdutoResponse {
     //necessário alterar idcategoria e subcategoria, estou apenas montando a estrutura inicial antes de juntar tudo
 
     private UUID id;
-    private String idCategoria;
-    private String idSubCategoria;
+    private Categoria categoria;
+    private Subcategoria subcategoria;
     private String nomeProduto;
     private Double preco;
 
     public ProdutoResponse(Produto produto) {
         this.id = produto.getId();
-        this.idCategoria = produto.getIdCategoria();
-        this.idSubCategoria = produto.getIdSubCategoria();
+        this.categoria = produto.getCategoria();
+        this.subcategoria = produto.getSubcategoria();
         this.nomeProduto = produto.getNomeProduto();
         this.preco = produto.getPreco();
     }
