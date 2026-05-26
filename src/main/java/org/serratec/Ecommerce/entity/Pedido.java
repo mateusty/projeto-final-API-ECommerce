@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.serratec.Ecommerce.enums.StatusPedido;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -17,8 +18,8 @@ import java.util.UUID;
 public class Pedido {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private LocalDate data;
@@ -31,4 +32,6 @@ public class Pedido {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private List<ItemPedido> itens;
 }

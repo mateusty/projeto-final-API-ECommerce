@@ -22,10 +22,10 @@ public class ItemPedido {
     private int quantidade;
 
     @Column(nullable = false)
-    private double valorVenda;
+    private Double valorVenda;
 
     @Column(nullable = false)
-    private double desconto;
+    private Double desconto;
 
     @ManyToOne
     @JoinColumn(name = "pedido_id")
