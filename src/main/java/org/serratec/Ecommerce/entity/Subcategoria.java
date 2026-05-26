@@ -23,6 +23,7 @@ public class Subcategoria {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(nullable = false)
     @NotBlank(message = " A categoria precisa de um nome ")
     private String nome;
 

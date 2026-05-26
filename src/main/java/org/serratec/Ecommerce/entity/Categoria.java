@@ -20,9 +20,10 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(nullable = false)
     @NotBlank (message = " A categoria precisa de um nome ")
     private String nome;
-
+    
     @Size(max = 200 , message = " A descrição deve ter no maximo 200 caracteres")
     private String descricao;
 
