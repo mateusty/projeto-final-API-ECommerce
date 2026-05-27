@@ -8,6 +8,7 @@ import org.serratec.Ecommerce.model.CategoriaRequest;
 import org.serratec.Ecommerce.model.CategoriaResponse;
 import org.serratec.Ecommerce.model.CategoriaUpdateRequest;
 import org.serratec.Ecommerce.repository.CategoriaRepository;
+import org.serratec.Ecommerce.repository.ProdutoRepository;
 import org.serratec.Ecommerce.repository.SubcategoriaRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +20,14 @@ public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
     private final SubcategoriaRepository subcategoriaRepository;
+    private final ProdutoRepository produtoRepository;
 
-    public CategoriaService(CategoriaRepository categoriaRepository, SubcategoriaRepository subcategoriaRepository){
+    public CategoriaService(CategoriaRepository categoriaRepository,
+                            SubcategoriaRepository subcategoriaRepository,
+                            ProdutoRepository produtoRepository) {
         this.categoriaRepository = categoriaRepository;
         this.subcategoriaRepository = subcategoriaRepository;
+        this.produtoRepository = produtoRepository;
     }
 
     // referente ao POST

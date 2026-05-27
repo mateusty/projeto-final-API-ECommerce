@@ -7,6 +7,7 @@ import org.serratec.Ecommerce.exception.InvalidDataException;
 import org.serratec.Ecommerce.exception.NotFoundException;
 import org.serratec.Ecommerce.model.*;
 import org.serratec.Ecommerce.repository.CategoriaRepository;
+import org.serratec.Ecommerce.repository.ProdutoRepository;
 import org.serratec.Ecommerce.repository.SubcategoriaRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +19,12 @@ public class SubcategoriaService {
 
     private final SubcategoriaRepository subcategoriaRepository;
     private final CategoriaRepository categoriaRepository;
+    private final ProdutoRepository produtoRepository;
 
-    public SubcategoriaService (SubcategoriaRepository  subcategoriaRepository,CategoriaRepository categoriaRepository){
+    public SubcategoriaService (SubcategoriaRepository  subcategoriaRepository,CategoriaRepository categoriaRepository, ProdutoRepository produtoRepository){
         this.subcategoriaRepository = subcategoriaRepository;
         this.categoriaRepository = categoriaRepository;
+        this.produtoRepository = produtoRepository;
     }
 
     // referente ao POST
