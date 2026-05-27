@@ -34,7 +34,7 @@ public class Produto {
     @Column(nullable = false)
     private Double preco;
 
-    public Produto(ProdutoRequest dto) {
+    public Produto(ProdutoRequest dto, Categoria categoria, Subcategoria subcategoria) {
         this.categoria = dto.getCategoria();
         this.subcategoria = dto.getSubcategoria();
         this.nomeProduto = dto.getNomeProduto();
