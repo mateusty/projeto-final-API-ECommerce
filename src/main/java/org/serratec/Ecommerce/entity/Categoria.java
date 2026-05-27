@@ -21,7 +21,7 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     @NotBlank (message = " A categoria precisa de um nome ")
     private String nome;
     

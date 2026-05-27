@@ -18,4 +18,8 @@ public interface SubcategoriaRepository extends JpaRepository<Subcategoria, UUID
 
     boolean existsByNomeIgnoreCase(String nome);
 
+    List<Subcategoria> findAllByOrderByNomeAsc();
+
+    List<Subcategoria> findByCategoriaIdOrderByNomeAsc(UUID categoriaId);
+
 }

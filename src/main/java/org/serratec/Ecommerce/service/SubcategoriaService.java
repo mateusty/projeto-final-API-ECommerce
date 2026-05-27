@@ -38,12 +38,11 @@ public class SubcategoriaService {
 
     //referente ao GET
     public List<SubcategoriaResponse> listarSubcategorias() {
-        List<Subcategoria> subcategorias = subcategoriaRepository.findAll();
+        List<Subcategoria> subcategorias = subcategoriaRepository.findAllByOrderByNomeAsc();
         if (subcategorias.isEmpty()) {
             throw new NotFoundException(" Nenhuma subcategoria cadastrada");
         }
         return subcategorias.stream()
-                .sorted((a, b) -> a.getNome().compareToIgnoreCase(b.getNome()))
                 .map(SubcategoriaResponse::new)
                 .toList();
     }
@@ -69,12 +68,11 @@ public class SubcategoriaService {
         if (!categoriaRepository.existsById(categoriaId)) {
             throw new NotFoundException("Categoria não encontrada com esse ID.");
         }
-        List<Subcategoria> subcategorias = subcategoriaRepository.findByCategoriaId(categoriaId);
+        List<Subcategoria> subcategorias = subcategoriaRepository.findByCategoriaIdOrderByNomeAsc(categoriaId);
         if (subcategorias.isEmpty()) {
             throw new NotFoundException("Nenhuma subcategoria encontrada para essa categoria.");
         }
         return subcategorias.stream()
-                .sorted((a, b) -> a.getNome().compareToIgnoreCase(b.getNome()))
                 .map(SubcategoriaResponse::new)
                 .toList();
     }
