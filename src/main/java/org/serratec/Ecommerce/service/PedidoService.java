@@ -108,7 +108,7 @@ public class PedidoService {
             ItemPedidoResponse itemResponse = new ItemPedidoResponse();
             itemResponse.setIdItemPedido(item.getId());
             itemResponse.setIdProduto(item.getProduto().getId());
-            itemResponse.setNomeProduto(item.getProduto().getNome());
+            itemResponse.setNomeProduto(item.getProduto().getNomeProduto());
             itemResponse.setQuantidade(item.getQuantidade());
             itemResponse.setValorVenda(item.getValorVenda());
             itemResponse.setDesconto(item.getDesconto());
