@@ -103,9 +103,9 @@ public class SubcategoriaService {
         Subcategoria subcategoria = subcategoriaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Nenhuma subcategoria encontrada com esse ID"));
 
-       /* if (produtoRepository.existsBySubcategoriaId(id)) {
+        if (produtoRepository.existsBySubcategoriaId(id)) {
             throw new InvalidDataException("Não é possível deletar uma subcategoria com produtos vinculados.");
-        }*/
+        }
         subcategoriaRepository.delete(subcategoria);
     }
 }

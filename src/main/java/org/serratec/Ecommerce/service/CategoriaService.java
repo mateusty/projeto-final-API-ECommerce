@@ -134,9 +134,9 @@ public class CategoriaService {
         Categoria categoria = categoriaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Nenhuma categoria encontrada com esse ID"));
 
-       /* if (produtoRepository.existsByCategoriaId(id)) {
+        if (produtoRepository.existsByCategoriaId(id)) {
             throw new InvalidDataException("Não é possível deletar uma categoria com produtos vinculados.");
-        }*/
+        }
 
         if (subcategoriaRepository.existsByCategoriaId(id)) {
             throw new InvalidDataException("Não é possível deletar uma categoria com subcategorias vinculadas.");

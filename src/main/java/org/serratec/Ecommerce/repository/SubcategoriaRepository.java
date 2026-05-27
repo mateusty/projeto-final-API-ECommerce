@@ -12,8 +12,6 @@ public interface SubcategoriaRepository extends JpaRepository<Subcategoria, UUID
 
     Optional<Subcategoria> findByNomeIgnoreCase (String nome);
 
-    List<Subcategoria> findByCategoriaId ( UUID categoriaId);
-
     boolean existsByCategoriaId(UUID categoriaId);
 
     boolean existsByNomeIgnoreCase(String nome);

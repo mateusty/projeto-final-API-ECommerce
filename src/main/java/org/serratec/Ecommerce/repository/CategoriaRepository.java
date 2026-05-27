@@ -18,8 +18,6 @@ public interface CategoriaRepository extends JpaRepository<Categoria, UUID> {
 
     Optional<Categoria> findByNomeIgnoreCase (String nome);
 
-    List<Categoria>  findByStatusCategoria(StatusCategoria status);
-
     List<Categoria> findAllByOrderByNomeAsc();
 
     List<Categoria> findByStatusCategoriaOrderByNomeAsc(StatusCategoria status);
