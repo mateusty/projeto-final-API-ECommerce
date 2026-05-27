@@ -1,6 +1,8 @@
 package org.serratec.Ecommerce.repository;
 
+import org.serratec.Ecommerce.entity.Categoria;
 import org.serratec.Ecommerce.entity.Produto;
+import org.serratec.Ecommerce.entity.Subcategoria;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

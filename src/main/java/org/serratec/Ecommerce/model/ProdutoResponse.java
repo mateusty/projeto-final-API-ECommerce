@@ -3,7 +3,9 @@ package org.serratec.Ecommerce.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.serratec.Ecommerce.entity.Categoria;
 import org.serratec.Ecommerce.entity.Produto;
+import org.serratec.Ecommerce.entity.Subcategoria;
 
 import java.util.UUID;
 

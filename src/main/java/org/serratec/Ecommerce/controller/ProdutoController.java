@@ -1,6 +1,8 @@
 package org.serratec.Ecommerce.controller;
 
 import jakarta.validation.Valid;
+import org.serratec.Ecommerce.entity.Categoria;
+import org.serratec.Ecommerce.entity.Subcategoria;
 import org.serratec.Ecommerce.model.ProdutoRequest;
 import org.serratec.Ecommerce.model.ProdutoResponse;
 import org.serratec.Ecommerce.model.ProdutoUpdateRequest;

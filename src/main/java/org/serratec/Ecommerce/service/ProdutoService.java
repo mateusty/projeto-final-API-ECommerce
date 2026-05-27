@@ -1,6 +1,8 @@
 package org.serratec.Ecommerce.service;
 
+import org.serratec.Ecommerce.entity.Categoria;
 import org.serratec.Ecommerce.entity.Produto;
+import org.serratec.Ecommerce.entity.Subcategoria;
 import org.serratec.Ecommerce.exception.InvalidDataException;
 import org.serratec.Ecommerce.exception.NotFoundException;
 import org.serratec.Ecommerce.model.ProdutoRequest;

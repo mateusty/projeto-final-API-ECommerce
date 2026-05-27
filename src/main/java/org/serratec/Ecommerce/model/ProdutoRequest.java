@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.serratec.Ecommerce.entity.Categoria;
+import org.serratec.Ecommerce.entity.Subcategoria;
 
 @Data
 @NoArgsConstructor
