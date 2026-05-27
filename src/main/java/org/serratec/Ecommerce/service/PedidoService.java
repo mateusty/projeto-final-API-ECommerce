@@ -66,6 +66,7 @@ public class PedidoService {
         return transformarEntidadeParaResponse(pedidoSalvo);
     }
 
+    @Transactional
     public PedidoResponse atualizarPedido(Long id, PedidoUpdateRequest request) {
         Pedido pedido = pedidoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Pedido não encontrado com o id " + id));
