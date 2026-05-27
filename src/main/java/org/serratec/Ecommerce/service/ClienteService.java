@@ -17,6 +17,13 @@ public class ClienteService {
 
     private final ClienteRepository clienteRepository;
     private final EnderecoService enderecoService;
+    private final MailService mailService;
+
+    public ClienteService(ClienteRepository clienteRepository, EnderecoService enderecoService, MailService mailService) {
+        this.clienteRepository = clienteRepository;
+        this.enderecoService = enderecoService;
+        this.mailService = mailService;
+    }
 
     public ClienteResponse buscarPorId(UUID id) {
         Cliente cliente = clienteRepository.findById(id)
@@ -25,16 +32,17 @@ public class ClienteService {
         return new ClienteResponse(cliente);
     }
 
-    public ClienteService(ClienteRepository clienteRepository, EnderecoService enderecoService) {
-        this.clienteRepository = clienteRepository;
-        this.enderecoService = enderecoService;
-    }
 
     public Cliente inserirCliente(ClienteRequest cliente) {
         List<Endereco> enderecos = new ArrayList<>();
         cliente.getEnderecos().forEach(endereco -> {
             enderecos.add(this.enderecoService.buscarViaCep(endereco));
         });
+
+        this.mailService.enviarMensagem(cliente.getEmail(), "Criação de conta", "Olá, " +
+                cliente.getNome() +
+                " uma conta no PetShop foi criada em seu email " + cliente.getEmail());
+
         return this.clienteRepository.save(new Cliente(cliente, enderecos));
     }
 
@@ -71,6 +79,9 @@ public class ClienteService {
             });
             clienteDB.setEnderecos(enderecos);
         }
+
+        this.mailService.enviarMensagem(clienteDB.getEmail(), "Alteração de dados", "Olá, " + clienteDB.getNome() + ", sua conta com o email, " + clienteDB.getEmail() + " teve seus dados alterados.");
+
         this.clienteRepository.save(clienteDB);
         return clienteDB;
     }
