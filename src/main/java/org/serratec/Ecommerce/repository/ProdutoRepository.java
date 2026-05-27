@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
+
 public interface ProdutoRepository extends JpaRepository<Produto, UUID> {
     boolean existsByNomeProduto(String nomeProduto);
     List<Produto> findByNomeProdutoContainingIgnoreCase(String nomeProduto);

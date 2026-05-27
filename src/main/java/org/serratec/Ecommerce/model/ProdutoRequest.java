@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-//necessário alterar idcategoria e subcategoria, estou apenas montando a estrutura inicial antes de juntar tudo
-
 public class ProdutoRequest {
 
     @NotNull

@@ -13,8 +13,6 @@ import java.util.UUID;
 
 public class ProdutoResponse {
 
-    //necessário alterar idcategoria e subcategoria, estou apenas montando a estrutura inicial antes de juntar tudo
-
     private UUID id;
     private Categoria categoria;
     private Subcategoria subcategoria;

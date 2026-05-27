@@ -14,8 +14,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "produto")
 
-//necessário alterar idcategoria e subcategoria, estou apenas montando a estrutura inicial antes de juntar tudo
-
 public class Produto {
 
     @Id
