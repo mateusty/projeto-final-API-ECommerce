@@ -66,7 +66,7 @@ public class PedidoService {
         return transformarEntidadeParaResponse(pedidoSalvo);
     }
 
-    private PedidoResponse atualizarPedido(Long id, PedidoUpdateRequest request) {
+    public PedidoResponse atualizarPedido(Long id, PedidoUpdateRequest request) {
         Pedido pedido = pedidoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Pedido não encontrado com o id " + id));
 
@@ -77,14 +77,14 @@ public class PedidoService {
         return transformarEntidadeParaResponse(pedidoAtualizado);
     }
 
-    private PedidoResponse buscarPedidoPorId(Long id) {
+    public PedidoResponse buscarPedidoPorId(Long id) {
         Pedido pedido = pedidoRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Pedido não encontrado com o ID: " + id));
 
         return transformarEntidadeParaResponse(pedido);
     }
 
-    private List<PedidoResponse> listarTodos() {
+    public List<PedidoResponse> listarTodos() {
         return pedidoRepository.findAll()
                 .stream()
                 .map(this::transformarEntidadeParaResponse)
