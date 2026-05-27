@@ -41,36 +41,33 @@ public class CategoriaService {
     //referente ao GET
     // Consulta  apenas as categorias ativas e devolve em ordem alfabética
     public List<CategoriaResponse>listarCategoriasAtivas(){
-        List<Categoria> categorias = categoriaRepository.findByStatusCategoria(StatusCategoria.ATIVA);
+        List<Categoria> categorias = categoriaRepository.findByStatusCategoriaOrderByNomeAsc(StatusCategoria.ATIVA);
             if (categorias.isEmpty()){
                throw new NotFoundException(" Nenhuma Categoria Cadastrada");
             }
             return categorias.stream()
-                    .sorted((a, b) -> a.getNome().compareToIgnoreCase(b.getNome()))
                     .map(CategoriaResponse ::new)
                     .toList();
     }
 
     // Consulta  apenas as categorias inativas e devolve em ordem alfabética
     public List<CategoriaResponse>listarCategoriasInativas(){
-    List<Categoria> categorias = categoriaRepository.findByStatusCategoria(StatusCategoria.INATIVA);
+        List<Categoria> categorias = categoriaRepository.findByStatusCategoriaOrderByNomeAsc(StatusCategoria.INATIVA);
             if (categorias.isEmpty()){
         throw new NotFoundException(" Nenhuma Categoria Inativa Cadastrada");
     }
             return categorias.stream()
-                    .sorted((a, b) -> a.getNome().compareToIgnoreCase(b.getNome()))
                     .map(CategoriaResponse ::new)
                     .toList();
     }
 
     // Lista todas categorias ativas e inativas
     public List<CategoriaResponse>listarCategorias() {
-        List<Categoria> categorias = categoriaRepository.findAll();
+        List<Categoria> categorias = categoriaRepository.findAllByOrderByNomeAsc();
         if (categorias.isEmpty()) {
             throw new NotFoundException(" Nenhuma Categoria Cadastrada");
         }
         return categorias.stream()
-                .sorted((a, b) -> a.getNome().compareToIgnoreCase(b.getNome()))
                 .map(CategoriaResponse::new)
                 .toList();
     }
@@ -137,9 +134,9 @@ public class CategoriaService {
         Categoria categoria = categoriaRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Nenhuma categoria encontrada com esse ID"));
 
-       /* if (produtoRepository.existsByCategoriaId(id)) {
+        if (produtoRepository.existsByCategoriaId(id)) {
             throw new InvalidDataException("Não é possível deletar uma categoria com produtos vinculados.");
-        }*/
+        }
 
         if (subcategoriaRepository.existsByCategoriaId(id)) {
             throw new InvalidDataException("Não é possível deletar uma categoria com subcategorias vinculadas.");
@@ -147,6 +144,8 @@ public class CategoriaService {
 
         categoriaRepository.delete(categoria);
     }
+
+
 
 }
 
