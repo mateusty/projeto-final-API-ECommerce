@@ -68,13 +68,27 @@ public class PedidoService {
 
     private PedidoResponse atualizarPedido(Long id, PedidoUpdateRequest request) {
         Pedido pedido = pedidoRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(("Pedido não encontrado com o id " + id)));
+                .orElseThrow(() -> new NotFoundException("Pedido não encontrado com o id " + id));
 
         pedido.setStatus(request.getStatus());
 
         Pedido pedidoAtualizado = pedidoRepository.save(pedido);
 
         return transformarEntidadeParaResponse(pedidoAtualizado);
+    }
+
+    private PedidoResponse buscarPedidoPorId(Long id) {
+        Pedido pedido = pedidoRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Pedido não encontrado com o ID: " + id));
+
+        return transformarEntidadeParaResponse(pedido);
+    }
+
+    private List<PedidoResponse> listarTodos() {
+        return pedidoRepository.findAll()
+                .stream()
+                .map(this::transformarEntidadeParaResponse)
+                .toList();
     }
 
 // Mét'odo auxiliar para converter entidade pedido em pedidoresponse
