@@ -32,8 +32,8 @@ public class ProdutoController {
     @GetMapping
     public ResponseEntity<List<ProdutoResponse>> buscarProduto(
             @RequestParam(required = false) String nomeProduto,
-            @RequestParam(required = false) String categoria,
-            @RequestParam(required = false) String subcategoria) {
+            @RequestParam(required = false) Categoria categoria,
+            @RequestParam(required = false) Subcategoria subcategoria) {
         List<ProdutoResponse> produtos = this.produtoService.buscarProduto(nomeProduto, categoria, subcategoria);
         return ResponseEntity.status(HttpStatus.OK).body(produtos);
     }

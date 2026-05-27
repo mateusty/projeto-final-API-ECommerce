@@ -40,12 +40,12 @@ public class ProdutoService {
         if (dto.getPreco() != null) {
             produto.setPreco(dto.getPreco());
         }
-//        if (dto.getCategoria() != null) {
-//            produto.setCategoria(dto.getCategoria());
-//        }
-//        if (dto.getIdSubcategoria() != null) {
-//            produto.setSubcategoria(dto.getSubcategoria());
-//        }
+        if (dto.getCategoria() != null) {
+            produto.setCategoria(dto.getCategoria());
+        }
+        if (dto.getSubcategoria() != null) {
+            produto.setSubcategoria(dto.getSubcategoria());
+        }
 
         this.produtoRepository.save(produto);
     }
