@@ -1,3 +1,4 @@
+package org.serratec.Ecommerce.controller;
 
 import jakarta.validation.Valid;
 import org.serratec.Ecommerce.model.*;
