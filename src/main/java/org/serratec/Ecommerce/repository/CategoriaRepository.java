@@ -20,6 +20,10 @@ public interface CategoriaRepository extends JpaRepository<Categoria, UUID> {
 
     List<Categoria>  findByStatusCategoria(StatusCategoria status);
 
+    List<Categoria> findAllByOrderByNomeAsc();
+
+    List<Categoria> findByStatusCategoriaOrderByNomeAsc(StatusCategoria status);
+
 
 
 }

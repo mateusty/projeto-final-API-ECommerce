@@ -10,12 +10,16 @@ import java.util.UUID;
 
 public interface SubcategoriaRepository extends JpaRepository<Subcategoria, UUID> {
 
-    boolean  existsByNome (String nome);
-
-    Optional<Subcategoria> findByNome (String nome);
+    Optional<Subcategoria> findByNomeIgnoreCase (String nome);
 
     List<Subcategoria> findByCategoriaId ( UUID categoriaId);
 
     boolean existsByCategoriaId(UUID categoriaId);
+
+    boolean existsByNomeIgnoreCase(String nome);
+
+    List<Subcategoria> findAllByOrderByNomeAsc();
+
+    List<Subcategoria> findByCategoriaIdOrderByNomeAsc(UUID categoriaId);
 
 }
