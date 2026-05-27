@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.serratec.Ecommerce.model.CategoriaRequest;
 
 import java.util.UUID;
 
@@ -30,12 +31,11 @@ public class Categoria {
     @Enumerated(EnumType.STRING)
     private StatusCategoria statusCategoria;
 
+    public Categoria(CategoriaRequest request){
 
+        this.nome = request.getNome().trim();
+        this.descricao = request.getDescricao();
+        this.statusCategoria = StatusCategoria.ATIVA;
 
-
-
-
-
-
-
+    }
 }

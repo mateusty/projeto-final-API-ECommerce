@@ -16,4 +16,6 @@ public interface SubcategoriaRepository extends JpaRepository<Subcategoria, UUID
 
     List<Subcategoria> findByCategoriaId ( UUID categoriaId);
 
+    boolean existsByCategoriaId(UUID categoriaId);
+
 }

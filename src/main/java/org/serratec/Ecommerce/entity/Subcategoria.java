@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.serratec.Ecommerce.model.SubcategoriaRequest;
 
 import java.util.UUID;
 
@@ -34,5 +35,11 @@ public class Subcategoria {
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
+
+    public Subcategoria (SubcategoriaRequest request, Categoria categoria){
+         this.nome = request.getNome();
+         this.descricao = request.getDescricao();
+         this.categoria = categoria;
+    }
 
 }
