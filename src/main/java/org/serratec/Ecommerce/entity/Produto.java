@@ -35,8 +35,8 @@ public class Produto {
     private Double preco;
 
     public Produto(ProdutoRequest dto, Categoria categoria, Subcategoria subcategoria) {
-        this.categoria = dto.getCategoria();
-        this.subcategoria = dto.getSubcategoria();
+        this.categoria = categoria;
+        this.subcategoria = subcategoria;
         this.nomeProduto = dto.getNomeProduto();
         this.preco = dto.getPreco();
     }

@@ -27,7 +27,7 @@ public class ProdutoService {
         if (this.produtoRepository.existsByNomeProduto(dto.getNomeProduto())) {
             throw new InvalidDataException("Falha ao cadastrar: Produto já cadastrado.");
         }
-        Produto produto = new Produto(dto);
+        Produto produto = new Produto(dto, dto.getCategoria(), dto.getSubcategoria());
         this.produtoRepository.save(produto);
     }
 
