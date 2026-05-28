@@ -1,10 +1,11 @@
 package org.serratec.Ecommerce.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.serratec.Ecommerce.entity.Categoria;
-import org.serratec.Ecommerce.entity.Subcategoria;
+
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -12,9 +13,16 @@ import org.serratec.Ecommerce.entity.Subcategoria;
 
 public class ProdutoUpdateRequest {
 
-    private Categoria categoria;
-    private Subcategoria subcategoria;
+    @Schema(nullable = true, description = "FK da categoria dentro do ProdutoUpdateRequest para atualizar")
+    private UUID categoriaId;
+
+    @Schema(nullable = true, description = "FK da subcategoria dentro do ProdutoUpdateRequest para atualizar")
+    private UUID subcategoriaId;
+
+    @Schema(nullable = true, description = "Nome do produto a ser atualizado")
     private String nomeProduto;
+
+    @Schema(nullable = true, description = "Valor do produto a ser atualizado")
     private Double preco;
 
 }
