@@ -1,6 +1,5 @@
 package org.serratec.Ecommerce.service;
 
-import org.hibernate.dialect.function.array.ArrayArgumentValidator;
 import org.serratec.Ecommerce.entity.Cliente;
 import org.serratec.Ecommerce.entity.Endereco;
 import org.serratec.Ecommerce.exception.NotFoundException;
@@ -71,7 +70,7 @@ public class ClienteService {
         if(temEndereco) {
             cliente.getEnderecos().forEach(endereco -> {
                if(this.enderecoService.doesCepExists(endereco.getCep())) {
-                   enderecos.add(new Endereco(this.enderecoService.buscarEndereco(endereco.getCep())));
+                   enderecos.addAll(this.enderecoService.buscarEndereco(endereco.getCep()).stream().map(Endereco::new).toList());
                }
                else {
                    enderecos.add(this.enderecoService.buscarViaCep(new EnderecoRequest(endereco)));
@@ -110,5 +109,13 @@ public class ClienteService {
         });
 
         return clientes.stream().map(ClienteResponse::new).toList();
+    }
+
+    public void deletarCliente(UUID id) {
+        if(!this.clienteRepository.existsById(id)) {
+            throw new NotFoundException("Não existe um cliente com o id: " + id);
+        }
+
+        this.clienteRepository.deleteById(id);
     }
 }

@@ -8,6 +8,8 @@ import org.serratec.Ecommerce.model.EnderecoRequest;
 import org.serratec.Ecommerce.model.EnderecoResponse;
 import org.serratec.Ecommerce.model.ViaCepResponse;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -37,6 +39,9 @@ public class Endereco {
 
     @Column
     private String complemento;
+
+    @ManyToMany(mappedBy = "enderecos")
+    private List<Cliente> clientes = new ArrayList<>();
 
     public Endereco(EnderecoRequest enderecoRequest, ViaCepResponse viaCepResponse) {
         this.cep = enderecoRequest.getCep();
