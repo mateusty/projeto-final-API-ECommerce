@@ -40,7 +40,12 @@ public class PedidoResponse {
     @Schema(description = "Lista de itens do pedido")
     private List<ItemPedidoResponse> itens;
 
+    @Schema(description = "Valor do frete do pedido, calculado dinamicamente conforme o valor total",
+            example = "15.00")
+    private Double frete;
+
     @Schema(description = "Valor total do pedido (soma dos subtotais dos itens)",
             example = "299.90")
     private Double valorTotal;
+
 }
