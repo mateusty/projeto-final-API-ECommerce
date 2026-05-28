@@ -104,4 +104,17 @@ public class ClienteController {
                                                     @PathVariable UUID id) {
         return ResponseEntity.ok(this.clienteService.atualizarCliente(cliente, id));
     }
+
+    @GetMapping("/contagem")
+    @Operation(summary = "Contar clientes cadastrados",
+            description = "Retorna a quantidade total de clientes no sistema. Útil para dashboards e estatísticas.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Contagem realizada com sucesso"),
+            @ApiResponse(responseCode = "401", description = "Não autorizado"),
+            @ApiResponse(responseCode = "403", description = "Acesso negado")
+    })
+    public ResponseEntity<Long> contarClientes() {
+        long quantidade = clienteService.contarClientes();
+        return ResponseEntity.ok(quantidade);
+    }
 }

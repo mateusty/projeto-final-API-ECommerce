@@ -118,4 +118,8 @@ public class ClienteService {
 
         this.clienteRepository.deleteById(id);
     }
+
+    public long contarClientes() {
+        return clienteRepository.count();
+    }
 }
