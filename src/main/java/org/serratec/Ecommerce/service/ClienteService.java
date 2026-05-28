@@ -1,6 +1,5 @@
 package org.serratec.Ecommerce.service;
 
-import org.hibernate.dialect.function.array.ArrayArgumentValidator;
 import org.serratec.Ecommerce.entity.Cliente;
 import org.serratec.Ecommerce.entity.Endereco;
 import org.serratec.Ecommerce.exception.NotFoundException;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -72,7 +70,7 @@ public class ClienteService {
         if(temEndereco) {
             cliente.getEnderecos().forEach(endereco -> {
                if(this.enderecoService.doesCepExists(endereco.getCep())) {
-                   enderecos.add(new Endereco(this.enderecoService.buscarEndereco(endereco.getCep())));
+                   enderecos.addAll(this.enderecoService.buscarEndereco(endereco.getCep()).stream().map(Endereco::new).toList());
                }
                else {
                    enderecos.add(this.enderecoService.buscarViaCep(new EnderecoRequest(endereco)));

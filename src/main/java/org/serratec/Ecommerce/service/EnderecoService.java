@@ -1,11 +1,10 @@
 package org.serratec.Ecommerce.service;
 
+import jakarta.transaction.Transactional;
 import org.serratec.Ecommerce.entity.Endereco;
 import org.serratec.Ecommerce.exception.InvalidDataException;
 import org.serratec.Ecommerce.exception.NotFoundException;
-import org.serratec.Ecommerce.model.EnderecoRequest;
-import org.serratec.Ecommerce.model.EnderecoResponse;
-import org.serratec.Ecommerce.model.ViaCepResponse;
+import org.serratec.Ecommerce.model.*;
 import org.serratec.Ecommerce.repository.EnderecoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,10 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -51,9 +49,38 @@ public class EnderecoService {
         }
     }
 
+    public EnderecoResponse atualizarEnderco(EnderecoUpdateRequest endereco, UUID id) {
+        boolean temCep = endereco.getCep() != null && !endereco.getCep().isBlank();
+        boolean temComplemento = endereco.getComplemento() != null && !endereco.getComplemento().isBlank();
+
+        List<Endereco> enderecos = new ArrayList<>();
+
+        Endereco enderecoDB = this.enderecoRepository.findById(id).orElseThrow(() -> new NotFoundException("Não há um cliente com o id: " + id));
+        if(temCep) {
+            enderecoDB.setCep(endereco.getCep());
+        }
+        if(temComplemento) {
+            enderecoDB.setComplemento(endereco.getComplemento());
+        }
+
+        this.enderecoRepository.save(enderecoDB);
+        return new EnderecoResponse(enderecoDB);
+    }
+
+    @Transactional
+    public void deletarEndereco(UUID id) {
+        Endereco endereco = this.enderecoRepository.findById(id).orElseThrow(() -> new NotFoundException("Não existe um endereco com o id: " + id));
+        endereco.getClientes().forEach(cliente -> cliente.getEnderecos().remove(endereco));
+
+        this.enderecoRepository.delete(endereco);
+    }
+
     // Funções auxiliares para o Service do cliente
-    public EnderecoResponse buscarEndereco(String cep) {
-        return new EnderecoResponse(this.enderecoRepository.findByCep(cep));
+    public List<EnderecoResponse> buscarEndereco(String cep) {
+        if(!(cep.isBlank())) {
+            return List.of(new EnderecoResponse(this.enderecoRepository.findByCep(cep)));
+        }
+        return this.enderecoRepository.findAll().stream().map(EnderecoResponse::new).toList();
     }
 
     public boolean doesCepExists(String cep) {
