@@ -1,5 +1,6 @@
 package org.serratec.Ecommerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,6 +41,7 @@ public class Endereco {
     @Column
     private String complemento;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "enderecos")
     private List<Cliente> clientes = new ArrayList<>();
 
