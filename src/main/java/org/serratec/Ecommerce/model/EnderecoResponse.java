@@ -6,11 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.serratec.Ecommerce.entity.Endereco;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "Resposta com os dados completos do endereço, incluindo informações enriquecidas pelo ViaCEP")
 public class EnderecoResponse {
+
+    @Schema(description = "ID único do endereco", example = "550e8400-e29b-41d4-a716-446655440000", accessMode = Schema.AccessMode.READ_ONLY)
+    private UUID id;
 
     @Schema(description = "CEP do endereço (8 dígitos)",
             example = "01001000",
@@ -39,6 +44,7 @@ public class EnderecoResponse {
     private String uf;
 
     public EnderecoResponse(Endereco endereco) {
+        this.id = endereco.getId();
         this.cep = endereco.getCep();
         this.logradouro = endereco.getLogradouro();
         this.complemento = endereco.getComplemento();

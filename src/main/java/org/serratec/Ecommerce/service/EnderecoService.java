@@ -77,7 +77,7 @@ public class EnderecoService {
 
     // Funções auxiliares para o Service do cliente
     public List<EnderecoResponse> buscarEndereco(String cep) {
-        if(!(cep.isBlank())) {
+        if(cep != null && !cep.isEmpty()) {
             return List.of(new EnderecoResponse(this.enderecoRepository.findByCep(cep)));
         }
         return this.enderecoRepository.findAll().stream().map(EnderecoResponse::new).toList();
