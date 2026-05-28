@@ -36,7 +36,7 @@ public class CategoriaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Criada com sucesso",
                     content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos",
+            @ApiResponse(responseCode = "400", description ="Dados inválidos ou categoria já cadastrada" ,
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<CategoriaResponse> criarCategoria(@Valid @RequestBody CategoriaRequest request) {
@@ -84,7 +84,7 @@ public class CategoriaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Categoria encontrada",
                     content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Categoria não encontrada",
+            @ApiResponse(responseCode = "404", description = "Nenhuma categoria encontrada com esse ID",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<CategoriaResponse> buscarPorId(
@@ -100,7 +100,7 @@ public class CategoriaController {
                     content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
             @ApiResponse(responseCode = "400", description = "Nome não informado",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Categoria não encontrada",
+            @ApiResponse(responseCode = "404", description = "Categoria não foi encontrada com esse nome  ",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<CategoriaResponse> buscarPorNome(
@@ -114,9 +114,9 @@ public class CategoriaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Atualizada com sucesso",
                     content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos",
+            @ApiResponse(responseCode = "400", description =  "Categoria inativa, dados inválidos ou nome já cadastrado",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Categoria não encontrada",
+            @ApiResponse(responseCode = "404", description = "Nenhuma categoria encontrada com esse ID",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<CategoriaResponse> atualizarCategoria(
@@ -127,11 +127,11 @@ public class CategoriaController {
     }
 
     @PatchMapping("/{id}/status")
-    @Operation(summary = "Alternar status da categoria")
+    @Operation(summary = "Alternar status da categoria entre ATIVA e INATIVA")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Status alterado com sucesso",
                     content = @Content(schema = @Schema(implementation = CategoriaResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Categoria não encontrada",
+            @ApiResponse(responseCode = "404", description = "Nenhuma categoria encontrada com esse ID",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<CategoriaResponse> alterarStatus(
@@ -144,9 +144,9 @@ public class CategoriaController {
     @Operation(summary = "Deletar categoria")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Deletada com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Categoria com vínculos",
+            @ApiResponse(responseCode = "400", description =  "Categoria possui produtos ou subcategorias vinculadas",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Categoria não encontrada",
+            @ApiResponse(responseCode = "404", description ="Nenhuma categoria encontrada com esse ID",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<Void> deletarCategoria(

@@ -48,7 +48,7 @@ public class CategoriaService {
     public List<CategoriaResponse>listarCategoriasAtivas(){
         List<Categoria> categorias = categoriaRepository.findByStatusCategoriaOrderByNomeAsc(StatusCategoria.ATIVA);
             if (categorias.isEmpty()){
-               throw new NotFoundException(" Nenhuma Categoria Cadastrada");
+               throw new NotFoundException("Nenhuma categoria ativa cadastrada");
             }
             return categorias.stream()
                     .map(CategoriaResponse ::new)
@@ -59,7 +59,7 @@ public class CategoriaService {
     public List<CategoriaResponse>listarCategoriasInativas(){
         List<Categoria> categorias = categoriaRepository.findByStatusCategoriaOrderByNomeAsc(StatusCategoria.INATIVA);
             if (categorias.isEmpty()){
-        throw new NotFoundException(" Nenhuma Categoria Inativa Cadastrada");
+        throw new NotFoundException("Nenhuma Categoria Inativa Cadastrada");
     }
             return categorias.stream()
                     .map(CategoriaResponse ::new)

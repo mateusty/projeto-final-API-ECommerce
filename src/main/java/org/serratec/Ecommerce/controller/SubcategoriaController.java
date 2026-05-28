@@ -34,9 +34,9 @@ public class SubcategoriaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Criada com sucesso",
                     content = @Content(schema = @Schema(implementation = SubcategoriaResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos",
+            @ApiResponse(responseCode = "400", description =  "Dados inválidos ou subcategoria já cadastrada",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Categoria não encontrada",
+            @ApiResponse(responseCode = "404", description = "Categoria não encontrada com esse ID",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<SubcategoriaResponse> criarSubcategoria (@Valid @RequestBody SubcategoriaRequest request) {
@@ -60,7 +60,7 @@ public class SubcategoriaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Subcategoria encontrada",
                     content = @Content(schema = @Schema(implementation = SubcategoriaResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Subcategoria não encontrada",
+            @ApiResponse(responseCode = "404", description =  "Nenhuma subcategoria encontrada com esse ID",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<SubcategoriaResponse> buscarPorId(
@@ -76,7 +76,7 @@ public class SubcategoriaController {
                     content = @Content(schema = @Schema(implementation = SubcategoriaResponse.class))),
             @ApiResponse(responseCode = "400", description = "Nome não informado",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Subcategoria não encontrada",
+            @ApiResponse(responseCode = "404", description = "Subcategoria não foi encontrada com esse nome  ",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<SubcategoriaResponse> buscarPorNome(
@@ -90,7 +90,7 @@ public class SubcategoriaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso",
                     content = @Content(schema = @Schema(implementation = SubcategoriaResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Categoria não encontrada ou sem subcategorias",
+            @ApiResponse(responseCode = "404", description = "Categoria não encontrada ou sem subcategorias cadastradas",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<List<SubcategoriaResponse>> listarPorCategoria(
@@ -104,9 +104,9 @@ public class SubcategoriaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Atualizada com sucesso",
                     content = @Content(schema = @Schema(implementation = SubcategoriaResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos",
+            @ApiResponse(responseCode = "400", description = "Dados inválidos ou nome já cadastrado",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Subcategoria não encontrada",
+            @ApiResponse(responseCode = "404", description = "Nenhuma subcategoria encontrada com esse ID",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<SubcategoriaResponse> atualizarSubcategoria(
@@ -119,9 +119,9 @@ public class SubcategoriaController {
     @Operation(summary = "Deletar subcategoria")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Deletada com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Subcategoria com produtos vinculados",
+            @ApiResponse(responseCode = "400", description = "Não é possível deletar uma subcategoria com produtos vinculados",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Subcategoria não encontrada",
+            @ApiResponse(responseCode = "404", description = "Nenhuma subcategoria encontrada com esse ID",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     public ResponseEntity<Void> deletarSubcategoria(
