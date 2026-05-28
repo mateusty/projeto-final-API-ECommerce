@@ -31,7 +31,7 @@ public class EnderecoController {
     }
 
     @GetMapping
-    @Operation(summary = "Listar endereços", description = "Retorna todos os endereços cadastrados no sistema")
+    @Operation(summary = "Buscar endereco", description = "Retorna endereços cadastrados no sistema pelo cep ou, na ausência do cep, lista todos os endereços")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = EnderecoResponse.class))),
@@ -40,47 +40,12 @@ public class EnderecoController {
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
     })
-    public ResponseEntity<List<EnderecoResponse>> listarEnderecos() {
-        List<EnderecoResponse> enderecos = enderecoService.listarEnderecos();
+    public ResponseEntity<List<EnderecoResponse>> listarEnderecos(
+            @Parameter(description = "Cep do endereço", example = "01310100")
+            @RequestParam(required = false) String cep
+    ) {
+        List<EnderecoResponse> enderecos = enderecoService.buscarEndereco(cep);
         return ResponseEntity.ok(enderecos);
-    }
-
-    @GetMapping("/cep/{cep}")
-    @Operation(summary = "Buscar endereço por CEP", description = "Busca um endereço específico pelo CEP (apenas números)")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Endereço encontrado com sucesso",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = EnderecoResponse.class))),
-            @ApiResponse(responseCode = "400", description = "CEP inválido",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Endereço não encontrado para o CEP informado",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
-    })
-    public ResponseEntity<EnderecoResponse> buscarEnderecoPorCep(
-            @Parameter(description = "CEP do endereço (apenas números)", example = "01001000", required = true)
-            @PathVariable String cep) {
-        EnderecoResponse endereco = enderecoService.buscarEndereco(cep);
-        return ResponseEntity.ok(endereco);
-    }
-
-    @GetMapping("/{id}")
-    @Operation(summary = "Buscar endereço por ID", description = "Busca um endereço específico pelo seu UUID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Endereço encontrado com sucesso",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = EnderecoResponse.class))),
-            @ApiResponse(responseCode = "400", description = "ID inválido",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "404", description = "Endereço não encontrado para o ID informado",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
-    })
-    public ResponseEntity<EnderecoResponse> buscarEnderecoPorId(
-            @Parameter(description = "UUID do endereço", example = "550e8400-e29b-41d4-a716-446655440000", required = true)
-            @PathVariable UUID id) {
-        EnderecoResponse endereco = enderecoService.buscarEnderecoPorId(id);
-        return ResponseEntity.ok(endereco);
     }
 
     @PutMapping("/{id}")

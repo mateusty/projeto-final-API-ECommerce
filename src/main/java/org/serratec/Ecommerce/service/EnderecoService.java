@@ -49,7 +49,7 @@ public class EnderecoService {
         }
     }
 
-    public EnderecoResponse atualizarEnderco(EnderecoUpdateRequest endereco, UUID id) {
+    public EnderecoResponse atualizarEndereco(EnderecoUpdateRequest endereco, UUID id) {
         boolean temCep = endereco.getCep() != null && !endereco.getCep().isBlank();
         boolean temComplemento = endereco.getComplemento() != null && !endereco.getComplemento().isBlank();
 
