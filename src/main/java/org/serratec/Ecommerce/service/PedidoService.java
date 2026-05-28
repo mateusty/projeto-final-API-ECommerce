@@ -5,7 +5,6 @@ import org.serratec.Ecommerce.entity.Cliente;
 import org.serratec.Ecommerce.entity.ItemPedido;
 import org.serratec.Ecommerce.entity.Pedido;
 import org.serratec.Ecommerce.entity.Produto;
-import org.serratec.Ecommerce.enums.StatusPedido;
 import org.serratec.Ecommerce.exception.NotFoundException;
 import org.serratec.Ecommerce.model.*;
 import org.serratec.Ecommerce.repository.ClienteRepository;
@@ -16,9 +15,11 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
 public class PedidoService {
+
+    public static final Double LIMITE_FRETE_GRATIS = 300.0;
+    public static final Double TAXA_FRETE = 0.05;
 
     private final PedidoRepository pedidoRepository;
     private final ProdutoRepository produtoRepository;
@@ -121,6 +122,16 @@ public class PedidoService {
         }
 
         response.setItens(itensResponse);
+
+        double valorFrete = 0.0;
+
+        if(totalGeral < LIMITE_FRETE_GRATIS) {
+            double freteCalculado = totalGeral * TAXA_FRETE;
+            valorFrete = Math.round(freteCalculado * 100) / 100.0;
+            totalGeral = totalGeral + valorFrete;
+        }
+
+        response.setFrete(valorFrete);
         response.setValorTotal(totalGeral);
 
         return response;
