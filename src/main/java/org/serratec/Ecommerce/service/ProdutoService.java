@@ -8,7 +8,9 @@ import org.serratec.Ecommerce.exception.NotFoundException;
 import org.serratec.Ecommerce.model.ProdutoRequest;
 import org.serratec.Ecommerce.model.ProdutoResponse;
 import org.serratec.Ecommerce.model.ProdutoUpdateRequest;
+import org.serratec.Ecommerce.repository.CategoriaRepository;
 import org.serratec.Ecommerce.repository.ProdutoRepository;
+import org.serratec.Ecommerce.repository.SubcategoriaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,16 +22,27 @@ import java.util.UUID;
 public class ProdutoService {
 
     private final ProdutoRepository produtoRepository;
+    private final CategoriaRepository categoriaRepository;
+    private final SubcategoriaRepository subcategoriaRepository;
 
-    public ProdutoService(ProdutoRepository produtoRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository,
+                          CategoriaRepository categoriaRepository,
+                          SubcategoriaRepository subcategoriaRepository) {
         this.produtoRepository = produtoRepository;
+        this.categoriaRepository = categoriaRepository;
+        this.subcategoriaRepository = subcategoriaRepository;
     }
 
     public void cadastrarProduto(ProdutoRequest dto) {
         if (this.produtoRepository.existsByNomeProduto(dto.getNomeProduto())) {
             throw new InvalidDataException("Falha ao cadastrar: Produto já cadastrado.");
         }
-        Produto produto = new Produto(dto, dto.getCategoria(), dto.getSubcategoria());
+        Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
+                .orElseThrow(() -> new NotFoundException("Categoria não encontrada."));
+        Subcategoria subcategoria = subcategoriaRepository.findById(dto.getSubcategoriaId())
+                .orElseThrow(() -> new NotFoundException("Subcategoria não encontrada."));
+
+        Produto produto = new Produto(dto, categoria, subcategoria);
         this.produtoRepository.save(produto);
     }
 

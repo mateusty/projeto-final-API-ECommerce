@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.serratec.Ecommerce.entity.Categoria;
 import org.serratec.Ecommerce.entity.Subcategoria;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,10 +17,10 @@ import org.serratec.Ecommerce.entity.Subcategoria;
 public class ProdutoRequest {
 
     @NotNull
-    private Categoria categoria;
+    private UUID categoriaId;
 
     @NotNull
-    private Subcategoria subcategoria;
+    private UUID subcategoriaId;
 
     @NotBlank
     private String nomeProduto;
