@@ -56,25 +56,29 @@ public class ProdutoService {
         if (dto.getPreco() != null) {
             produto.setPreco(dto.getPreco());
         }
-        if (dto.getCategoria() != null) {
-            produto.setCategoria(dto.getCategoria());
+        if (dto.getCategoriaId() != null) {
+            Categoria categoria = categoriaRepository.findById(dto.getCategoriaId())
+                    .orElseThrow(() -> new NotFoundException("Categoria não encontrada."));
+            produto.setCategoria(categoria);
         }
-        if (dto.getSubcategoria() != null) {
-            produto.setSubcategoria(dto.getSubcategoria());
+        if (dto.getSubcategoriaId() != null) {
+            Subcategoria subcategoria = subcategoriaRepository.findById(dto.getSubcategoriaId())
+                    .orElseThrow(() -> new NotFoundException("Subcategoria não encontrada"));
+            produto.setSubcategoria(subcategoria);
         }
 
         this.produtoRepository.save(produto);
     }
 
-    public List<ProdutoResponse> buscarProduto(String nomeProduto, Categoria categoria, Subcategoria subcategoria) {
+    public List<ProdutoResponse> buscarProduto(String nomeProduto, UUID categoriaId, UUID subcategoriaId) {
         List<Produto> produtos;
 
         if (nomeProduto != null) {
             produtos = this.produtoRepository.findByNomeProdutoContainingIgnoreCase(nomeProduto);
-        } else if (categoria != null) {
-            produtos = this.produtoRepository.findByCategoria(categoria);
-        } else if (subcategoria != null) {
-            produtos = this.produtoRepository.findBySubcategoria(subcategoria);
+        } else if (categoriaId != null) {
+            produtos = this.produtoRepository.findByCategoriaId(categoriaId);
+        } else if (subcategoriaId != null) {
+            produtos = this.produtoRepository.findBySubcategoriaId(subcategoriaId);
         } else {
             produtos = this.produtoRepository.findAll();
         }
