@@ -12,6 +12,7 @@ import org.serratec.Ecommerce.entity.Cliente;
 import org.serratec.Ecommerce.model.ClienteRequest;
 import org.serratec.Ecommerce.model.ClienteResponse;
 import org.serratec.Ecommerce.model.ClienteUpdateRequest;
+import org.serratec.Ecommerce.model.ErrorResponse;
 import org.serratec.Ecommerce.service.ClienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -116,5 +117,23 @@ public class ClienteController {
     public ResponseEntity<Long> contarClientes() {
         long quantidade = clienteService.contarClientes();
         return ResponseEntity.ok(quantidade);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Deletar cliente", description = "Remove um cliente do sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Cliente deletado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "ID inválido",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Cliente não encontrado para o ID informado",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+    })
+    public ResponseEntity<Void> deletarCliente(
+            @Parameter(description = "UUID do cliente", example = "550e8400-e29b-41d4-a716-446655440000", required = true)
+            @PathVariable UUID id) {
+        this.clienteService.deletarCliente(id);
+        return ResponseEntity.noContent().build();
     }
 }
