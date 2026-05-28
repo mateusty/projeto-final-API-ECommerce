@@ -1,5 +1,6 @@
 package org.serratec.Ecommerce.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,18 +9,33 @@ import org.serratec.Ecommerce.entity.Endereco;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(description = "Resposta com os dados completos do endereço, incluindo informações enriquecidas pelo ViaCEP")
 public class EnderecoResponse {
 
+    @Schema(description = "CEP do endereço (8 dígitos)",
+            example = "01001000",
+            pattern = "^\\d{8}$")
     private String cep;
 
+    @Schema(description = "Nome da rua/avenida (preenchido automaticamente pelo ViaCEP)",
+            example = "Praça da Sé")
     private String logradouro;
 
+    @Schema(description = "Informações complementares (número, apartamento, referência)",
+            example = "Apto 123 Bloco B")
     private String complemento;
 
+    @Schema(description = "Bairro do endereço",
+            example = "Sé")
     private String bairro;
 
+    @Schema(description = "Cidade do endereço",
+            example = "São Paulo")
     private String localidade;
 
+    @Schema(description = "Estado - sigla de 2 letras",
+            example = "SP",
+            pattern = "^[A-Z]{2}$")
     private String uf;
 
     public EnderecoResponse(Endereco endereco) {
