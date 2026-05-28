@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -110,5 +111,13 @@ public class ClienteService {
         });
 
         return clientes.stream().map(ClienteResponse::new).toList();
+    }
+
+    public void deletarCliente(UUID id) {
+        if(!this.clienteRepository.existsById(id)) {
+            throw new NotFoundException("Não existe um cliente com o id: " + id);
+        }
+
+        this.clienteRepository.deleteById(id);
     }
 }
